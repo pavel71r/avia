@@ -1,0 +1,33 @@
+.app {
+  width: 1350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  @media (max-width: 768px) {
+    width: 735px;
+    padding-top: 0px;
+  }
+}
+
+.container {
+  display: flex;
+  gap: 25px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
+.logo {
+  width: 82px;
+  min-height: 89px;
+  background-image: url(../../images/logoMain.png);
+  @media (max-width: 768px) {
+    display: none;
+  }
+}

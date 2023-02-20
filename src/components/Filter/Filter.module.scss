@@ -1,0 +1,46 @@
+.filter {
+  position: relative;
+  background-color: white;
+  width: 350px;
+  height: 351px;
+  border-radius: 5px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  box-shadow: 0 0 10px lightgrey;
+  padding: 25px;
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 10px;
+    height: 285px;
+  }
+}
+
+.title {
+  font-size: 22px;
+}
+
+.text {
+  font-size: 22px;
+  padding-left: 15px;
+}
+
+.checkbox {
+  width: 25px;
+  height: 25px;
+}
+
+.label {
+  cursor: pointer;
+  display: flex;
+  &:hover {
+    background-color: #f3f7fa;
+  }
+}
+
+.spinner {
+  position: absolute;
+  color: #2196f3;
+  right: 31px;
+  top: 31px;
+}

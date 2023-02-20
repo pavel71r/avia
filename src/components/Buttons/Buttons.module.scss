@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+}
+.default {
+  background-color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.active {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #2196f3;
+  color: white;
+}
+.btn {
+  width: 350px;
+  height: 70px;
+  border: 1px solid #dfe5ec;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}

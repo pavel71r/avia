@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f3f7fa;
+  font-size: 18px;
+  font-family: "Open Sans", sans-serif;
+  color: #4a4a4a;
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
