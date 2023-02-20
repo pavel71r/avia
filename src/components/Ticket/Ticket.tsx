@@ -133,7 +133,7 @@ const Ticket = (props: TicketsType) => {
       </div>
       <div className={style.col}>
         <div className={style.logo}>
-          <img alt="poster" src={`http://pics.avs.io/99/36/${props.carrier}.png`} />
+          <img alt="poster" src={`https://pics.avs.io/99/36/${props.carrier}.png`} />
         </div>
         <div className={style.row}>
           <span className={style.title}>{props.segments[0].stops.length > 0 && straightStops}</span>
