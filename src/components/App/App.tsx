@@ -9,10 +9,7 @@ import style from "./App.module.scss";
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const searchId = useAppSelector((state) => state.tickets.searchId);
-  const reloadSearch = useAppSelector((state) => state.tickets.reloadSearch);
-  const stopSearch = useAppSelector((state) => state.tickets.stopSearch);
-  const tickets = useAppSelector((state) => state.tickets.tickets);
+  const { searchId, reloadSearch, stopSearch, tickets } = useAppSelector((state) => state.tickets);
 
   useEffect(() => {
     dispatch(getUserId());

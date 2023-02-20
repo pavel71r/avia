@@ -10,7 +10,7 @@ import type { TicketsType } from "../../types";
 import style from "./TicketList.module.scss";
 
 const TicketList = () => {
-  const stopSearch = useAppSelector((state) => state.tickets.stopSearch);
+  const { stopSearch } = useAppSelector((state) => state.tickets);
   const tickets: Array<TicketsType> = useAppSelector((state) => state.tickets.filterTickets.slice(0, 5));
 
   const newTickets = tickets.map((el) => {

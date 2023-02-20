@@ -7,10 +7,7 @@ import style from "./Buttons.module.scss";
 
 const Buttons = () => {
   const dispatch = useAppDispatch();
-  const sort = useAppSelector((state) => state.tickets.sort);
-  const tickets = useAppSelector((state) => state.tickets.tickets);
-  const filter = useAppSelector((state) => state.tickets.filter);
-  const stopSearch = useAppSelector((state) => state.tickets.stopSearch);
+  const { sort, tickets, filter, stopSearch } = useAppSelector((state) => state.tickets);
 
   useEffect(() => {
     if (sort.cheap) {

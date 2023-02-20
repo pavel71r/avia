@@ -21,8 +21,7 @@ const Ticket = (props: TicketsType) => {
       }
       price.push(el);
       if (count === props.price.toString().length - 1) {
-        price.push(" ");
-        price.push("P");
+        price.push(" P");
       }
       count++;
     });

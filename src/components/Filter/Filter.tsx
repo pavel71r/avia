@@ -8,9 +8,7 @@ import style from "./Filter.module.scss";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
-  const filter = useAppSelector((state) => state.tickets.filter);
-  const stopSearch = useAppSelector((state) => state.tickets.stopSearch);
-  const firstPartTicket = useAppSelector((state) => state.tickets.firstPartTicket);
+  const { filter, stopSearch, firstPartTicket } = useAppSelector((state) => state.tickets);
 
   useEffect(() => {
     dispatch(filters());
