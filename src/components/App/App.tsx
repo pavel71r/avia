@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import Filter from "../Filter/Filter";
 import TicketList from "../TicketList/TicketList";

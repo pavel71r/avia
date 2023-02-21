@@ -1,4 +1,3 @@
-import React from "react";
 import { format, parseISO, add } from "date-fns";
 
 import type { TicketsType } from "../../types";
@@ -29,73 +28,53 @@ const Ticket = (props: TicketsType) => {
   const straightFly = `${props.segments[0].origin} - ${props.segments[0].destination}`;
   const returnFly = `${props.segments[1].origin} - ${props.segments[1].destination}`;
 
-  const straightDuration = `${Math.trunc(props.segments[0].duration / 60)}ч ${(
-    (Math.floor(props.segments[0].duration / 5) * 5) %
-    60
-  )
-    .toString()
-    .padStart(2, "0")}м`;
+  const durationMinutes = (value: number) => {
+    return ((Math.floor(props.segments[value].duration / 5) * 5) % 60).toString().padStart(2, "0");
+  };
 
-  const returnDuration = `${Math.trunc(props.segments[1].duration / 60)}ч ${(
-    (Math.floor(props.segments[1].duration / 5) * 5) %
-    60
-  )
-    .toString()
-    .padStart(2, "0")}м`;
+  const straightDuration = `${Math.trunc(props.segments[0].duration / 60)}ч ${durationMinutes(0)}м`;
+  const returnDuration = `${Math.trunc(props.segments[1].duration / 60)}ч ${durationMinutes(1)}м`;
+
+  const timeUpMinutes = (value: number) => {
+    return (Math.floor(Number(format(parseISO(props.segments[value].date), "mm")) / 5) * 5).toString().padStart(2, "0");
+  };
+
+  const timeDownMinutes = (value: number) => {
+    return (
+      Math.floor(
+        Number(
+          format(
+            add(parseISO(props.segments[value].date), {
+              minutes: props.segments[value].duration,
+            }),
+            "mm"
+          )
+        ) / 5
+      ) * 5
+    )
+      .toString()
+      .padStart(2, "0");
+  };
 
   const straightDate = format(parseISO(props.segments[0].date), "P");
-  const straightTimeUp = `${format(parseISO(props.segments[0].date), "HH")}:${(
-    Math.floor(Number(format(parseISO(props.segments[0].date), "mm")) / 5) * 5
-  )
-    .toString()
-    .padStart(2, "0")}`;
+  const straightTimeUp = `${format(parseISO(props.segments[0].date), "HH")}:${timeUpMinutes(0)}`;
 
   const straightTimeDown = `${format(
     add(parseISO(props.segments[0].date), {
       minutes: props.segments[0].duration,
     }),
     "HH"
-  )}:${(
-    Math.floor(
-      Number(
-        format(
-          add(parseISO(props.segments[0].date), {
-            minutes: props.segments[0].duration,
-          }),
-          "mm"
-        )
-      ) / 5
-    ) * 5
-  )
-    .toString()
-    .padStart(2, "0")}`;
+  )}:${timeDownMinutes(0)}`;
 
   const returnDate = format(parseISO(props.segments[1].date), "P");
-  const returnTimeUp = `${format(parseISO(props.segments[1].date), "HH")}:${(
-    Math.floor(Number(format(parseISO(props.segments[1].date), "mm")) / 5) * 5
-  )
-    .toString()
-    .padStart(2, "0")}`;
+  const returnTimeUp = `${format(parseISO(props.segments[1].date), "HH")}:${timeUpMinutes(1)}`;
 
   const returnTimeDown = `${format(
     add(parseISO(props.segments[1].date), {
       minutes: props.segments[1].duration,
     }),
     "HH"
-  )}:${(
-    Math.floor(
-      Number(
-        format(
-          add(parseISO(props.segments[1].date), {
-            minutes: props.segments[1].duration,
-          }),
-          "mm"
-        )
-      ) / 5
-    ) * 5
-  )
-    .toString()
-    .padStart(2, "0")}`;
+  )}:${timeDownMinutes(1)}`;
 
   const straightEndingText = props.segments[0].stops.length === 1 ? "a" : "и";
   const straightStops = `${props.segments[0].stops.length} пересадк${straightEndingText}`;

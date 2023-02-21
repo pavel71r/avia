@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { filters, changeAll, withoutTransfer, oneTransfer, twoTransfer, threeTransfer } from "../../store/ticketsSlice";
