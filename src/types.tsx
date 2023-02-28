@@ -1,12 +1,8 @@
 export type InitialType = {
   tickets: Array<TicketsType>;
-  filterTickets: Array<TicketsType>;
   stopSearch: boolean;
   searchId: string;
   reloadSearch: boolean;
-  sort: SortType;
-  filter: FilterType;
-  firstPartTicket: boolean;
 };
 
 export type TicketsType = {
@@ -15,17 +11,13 @@ export type TicketsType = {
   segments: Array<SegmentsType>;
 };
 
-export type SortType = {
-  cheap: boolean;
-  fast: boolean;
-};
-
 export type FilterType = {
   isAll: boolean;
   withoutTransfers: boolean;
   oneTransfer: boolean;
   twoTransfer: boolean;
   threeTransfer: boolean;
+  sort: boolean;
 };
 
 export type SegmentsType = {

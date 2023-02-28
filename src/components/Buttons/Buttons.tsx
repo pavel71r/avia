@@ -1,26 +1,16 @@
-import { useEffect } from "react";
-
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { onCheap, onFast } from "../../store/ticketsSlice";
+import { changeSort } from "../../store/filterSlice";
 
 import style from "./Buttons.module.scss";
 
 const Buttons = () => {
   const dispatch = useAppDispatch();
-  const { sort, tickets, filter, stopSearch } = useAppSelector((state) => state.tickets);
-
-  useEffect(() => {
-    if (sort.cheap) {
-      dispatch(onCheap());
-    } else {
-      dispatch(onFast());
-    }
-  }, [tickets, dispatch, sort, filter, stopSearch]);
+  const { sort } = useAppSelector((state) => state.filter);
 
   let btnCheapClass = [style.btn, style.default];
   let btnFastClass = [style.btn, style.active];
 
-  if (sort.fast) {
+  if (sort) {
     btnFastClass.push(style.active);
     btnCheapClass = [style.btn, style.default];
   } else {
@@ -33,7 +23,7 @@ const Buttons = () => {
       <button
         className={btnCheapClass.join(" ")}
         onClick={() => {
-          dispatch(onCheap());
+          dispatch(changeSort());
         }}
       >
         Самый дешевый
@@ -41,7 +31,7 @@ const Buttons = () => {
       <button
         className={btnFastClass.join(" ")}
         onClick={() => {
-          dispatch(onFast());
+          dispatch(changeSort());
         }}
       >
         Самый быстрый

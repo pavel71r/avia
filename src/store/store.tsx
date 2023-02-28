@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import ticketsSlice from "./ticketsSlice";
+import filterSlice from "./filterSlice";
 
 const store = configureStore({
   reducer: {
     tickets: ticketsSlice,
+    filter: filterSlice,
   },
 });
 

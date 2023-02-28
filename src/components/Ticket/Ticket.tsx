@@ -1,125 +1,79 @@
 import { format, parseISO, add } from "date-fns";
 
 import type { TicketsType } from "../../types";
+import { durationMin, timeUpMin, timeDownMin } from "../../helpers/ticketFunc";
 
 import style from "./Ticket.module.scss";
 
-const Ticket = (props: TicketsType) => {
-  let count = 0;
-  const price: Array<string> = [];
+const Ticket = ({ carrier, price, segments }: TicketsType) => {
+  function numberWithSpaces(value: number) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
 
-  props.price
-    .toString()
-    .split("")
-    .forEach((el) => {
-      if (count === 2 && props.price.toString().length === 5) {
-        price.push(" ");
-      }
-      if (count === 3 && props.price.toString().length === 6) {
-        price.push(" ");
-      }
-      price.push(el);
-      if (count === props.price.toString().length - 1) {
-        price.push(" P");
-      }
-      count++;
-    });
-
-  const straightFly = `${props.segments[0].origin} - ${props.segments[0].destination}`;
-  const returnFly = `${props.segments[1].origin} - ${props.segments[1].destination}`;
-
-  const durationMinutes = (value: number) => {
-    return ((Math.floor(props.segments[value].duration / 5) * 5) % 60).toString().padStart(2, "0");
-  };
-
-  const straightDuration = `${Math.trunc(props.segments[0].duration / 60)}ч ${durationMinutes(0)}м`;
-  const returnDuration = `${Math.trunc(props.segments[1].duration / 60)}ч ${durationMinutes(1)}м`;
-
-  const timeUpMinutes = (value: number) => {
-    return (Math.floor(Number(format(parseISO(props.segments[value].date), "mm")) / 5) * 5).toString().padStart(2, "0");
-  };
-
-  const timeDownMinutes = (value: number) => {
-    return (
-      Math.floor(
-        Number(
-          format(
-            add(parseISO(props.segments[value].date), {
-              minutes: props.segments[value].duration,
-            }),
-            "mm"
-          )
-        ) / 5
-      ) * 5
-    )
-      .toString()
-      .padStart(2, "0");
-  };
-
-  const straightDate = format(parseISO(props.segments[0].date), "P");
-  const straightTimeUp = `${format(parseISO(props.segments[0].date), "HH")}:${timeUpMinutes(0)}`;
+  const straightTimeUp = `${format(parseISO(segments[0].date), "HH")}:${timeUpMin(segments[0].date)}`;
 
   const straightTimeDown = `${format(
-    add(parseISO(props.segments[0].date), {
-      minutes: props.segments[0].duration,
+    add(parseISO(segments[0].date), {
+      minutes: segments[0].duration,
     }),
     "HH"
-  )}:${timeDownMinutes(0)}`;
+  )}:${timeDownMin(segments[0].duration, segments[0].date)}`;
 
-  const returnDate = format(parseISO(props.segments[1].date), "P");
-  const returnTimeUp = `${format(parseISO(props.segments[1].date), "HH")}:${timeUpMinutes(1)}`;
+  const returnTimeUp = `${format(parseISO(segments[1].date), "HH")}:${timeUpMin(segments[1].date)}`;
 
   const returnTimeDown = `${format(
-    add(parseISO(props.segments[1].date), {
-      minutes: props.segments[1].duration,
+    add(parseISO(segments[1].date), {
+      minutes: segments[1].duration,
     }),
     "HH"
-  )}:${timeDownMinutes(1)}`;
+  )}:${timeDownMin(segments[1].duration, segments[1].date)}`;
 
-  const straightEndingText = props.segments[0].stops.length === 1 ? "a" : "и";
-  const straightStops = `${props.segments[0].stops.length} пересадк${straightEndingText}`;
-  const straightStopsCity = props.segments[0].stops.join(", ");
+  const straightEndingText = segments[0].stops.length === 1 ? "a" : "и";
+  const straightStops = `${segments[0].stops.length} пересадк${straightEndingText}`;
 
-  const returnEndingText = props.segments[1].stops.length === 1 ? "a" : "и";
-  const returnStops = `${props.segments[1].stops.length} пересадк${returnEndingText}`;
-  const returnStopsCity = props.segments[1].stops.join(", ");
+  const returnEndingText = segments[1].stops.length === 1 ? "a" : "и";
+  const returnStops = `${segments[1].stops.length} пересадк${returnEndingText}`;
 
   return (
     <div className={style.ticket}>
       <div className={style.col}>
-        <span className={style.price}>{price.join("")}</span>
+        <span className={style.price}>{`${numberWithSpaces(price)} P`}</span>
         <div className={style.row}>
-          <span className={style.title}>{straightFly}</span>
+          <span className={style.title}>{`${segments[0].origin} - ${segments[0].destination}`}</span>
           <span className={style.text}>{`${straightTimeUp} - ${straightTimeDown}`}</span>
-          <span className={style.date}>{straightDate}</span>
+          <span className={style.date}>{format(parseISO(segments[0].date), "P")}</span>
         </div>
         <div className={style.row}>
-          <span className={style.title}>{returnFly}</span>
+          <span className={style.title}>{`${segments[1].origin} - ${segments[1].destination}`}</span>
           <span className={style.text}>{`${returnTimeUp} - ${returnTimeDown}`}</span>
-          <span className={style.date}>{returnDate}</span>
+          <span className={style.date}>{format(parseISO(segments[1].date), "P")}</span>
         </div>
       </div>
       <div className={style.col}>
         <div className={style.row}>
           <span className={style.title}>В пути</span>
-          <span className={style.text}>{straightDuration}</span>
+          <span className={style.text}>{`${Math.trunc(segments[0].duration / 60)}ч ${durationMin(
+            segments[0].duration
+          )}м`}</span>
         </div>
         <div className={style.row}>
           <span className={style.title}>В пути</span>
-          <span className={style.text}>{returnDuration}</span>
+          <span className={style.text}>{`${Math.trunc(segments[1].duration / 60)}ч ${durationMin(
+            segments[1].duration
+          )}м`}</span>
         </div>
       </div>
       <div className={style.col}>
         <div className={style.logo}>
-          <img alt="poster" src={`https://pics.avs.io/99/36/${props.carrier}.png`} />
+          <img alt="poster" src={`https://pics.avs.io/99/36/${carrier}.png`} />
         </div>
         <div className={style.row}>
-          <span className={style.title}>{props.segments[0].stops.length > 0 && straightStops}</span>
-          <span className={style.text}>{props.segments[0].stops.length > 0 && straightStopsCity}</span>
+          <span className={style.title}>{segments[0].stops.length > 0 && straightStops}</span>
+          <span className={style.text}>{segments[0].stops.length > 0 && segments[0].stops.join(", ")}</span>
         </div>
         <div className={style.row}>
-          <span className={style.title}>{props.segments[1].stops.length > 0 && returnStops}</span>
-          <span className={style.text}>{props.segments[1].stops.length > 0 && returnStopsCity}</span>
+          <span className={style.title}>{segments[1].stops.length > 0 && returnStops}</span>
+          <span className={style.text}>{segments[1].stops.length > 0 && segments[1].stops.join(", ")}</span>
         </div>
       </div>
     </div>

@@ -1,18 +1,13 @@
-import { useEffect } from "react";
-
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { filters, changeAll, withoutTransfer, oneTransfer, twoTransfer, threeTransfer } from "../../store/ticketsSlice";
 import Spinner from "../Spinner/Spinner";
+import { changeAll, withoutTransfer, oneTransfer, twoTransfer, threeTransfer } from "../../store/filterSlice";
 
 import style from "./Filter.module.scss";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
-  const { filter, stopSearch, firstPartTicket } = useAppSelector((state) => state.tickets);
-
-  useEffect(() => {
-    dispatch(filters());
-  }, [dispatch, stopSearch, filter, firstPartTicket]);
+  const { stopSearch } = useAppSelector((state) => state.tickets);
+  const { filter } = useAppSelector((state) => state);
 
   return (
     <div className={style.filter}>
