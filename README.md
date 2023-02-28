@@ -1,1 +1,1 @@
-https://avia-3ubqgnk04-pavel71r.vercel.app/
+https://avia-qjv4fym3x-pavel71r.vercel.app/
